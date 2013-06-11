@@ -1,0 +1,15 @@
+package modelo;
+
+public interface IEstadoCaja {
+	void puedeAbrirCaja();
+
+	void puedeAgregarProducto();
+
+	void puedeIniciarVenta();
+
+	void puedeConfirmarVenta();
+
+	void puedeCancelarventa();
+
+	void puedeCerrarCaja();
+}

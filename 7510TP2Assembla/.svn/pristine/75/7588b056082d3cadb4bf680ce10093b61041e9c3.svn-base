@@ -1,0 +1,9 @@
+package modelo;
+
+public interface IOferta {
+	void addCondicion(ICondicionOferta condicion);
+	void addAccion(IAccionOferta accion);
+	boolean chequearCondiciones(IVenta venta);
+	void aplicarOferta(IVenta venta);
+	boolean isRecurrente();		
+}

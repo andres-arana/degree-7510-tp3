@@ -1,0 +1,59 @@
+package modelo;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+public class OfertasRepository {
+	private List<IOferta> ofertas;
+	private HashMap<Integer, IOferta> hashOfertasCupones;
+
+	public OfertasRepository() {
+		ofertas = new ArrayList<IOferta>();
+		hashOfertasCupones = new HashMap<Integer, IOferta>();
+	}
+
+	public void addOferta(IOferta oferta) {
+		ofertas.add(oferta);
+	}
+
+	public void aplicarOfertas(IVenta venta) {
+		for (IOferta oferta : ofertas) {
+			while (oferta.chequearCondiciones(venta)) {
+				oferta.aplicarOferta(venta);
+				if (oferta.isRecurrente() == false)
+					break;
+			}
+		}
+	}
+
+	public IOferta getOfertaDelCupon(int idCupon) {
+
+		return hashOfertasCupones.get(idCupon);
+
+	}
+
+	public boolean addOfertaParaCupon(int idOferta, Oferta oferta) {
+
+		if (existeOfertaConId(idOferta)) {
+			return false;
+		}
+
+		if (idOferta > 0 && oferta != null) {
+			hashOfertasCupones.put(idOferta, oferta);
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
+	private boolean existeOfertaConId(int idOferta) {
+
+		if (hashOfertasCupones.get(idOferta) == null) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+}

@@ -1,0 +1,25 @@
+package modelo;
+
+import java.util.Calendar;
+import java.util.List;
+
+public interface IVenta {
+	void addProducto(Producto producto, int cantidad);
+	void addOferta(String detalle, int cantidad, double montoUnitario);
+	double getTotal();
+	double getTotalDescuentos();
+	double getTotalSinDescuentos();
+	String getMedioDePago();
+	Calendar getFecha();
+	void cobrar();
+	int getCajaNro();
+	String getUltimaLinea();
+	List<LineItemProducto> getProductos();
+	void aplicarDescuentoAlTotal(double descuento, String detalleOferta);
+	void setFormaDePago(String formaDePago);
+	void marcarProductosOfertados(IQuery query, int cantidad);
+	void marcarTodosLosProductosOfertados(IQuery query, List<Producto> excepciones);
+	void setEsJubilado(boolean jubilado);
+	boolean esJubilado();
+	void sumarDescuentoAlTotal(double descuento, String detalle);
+}

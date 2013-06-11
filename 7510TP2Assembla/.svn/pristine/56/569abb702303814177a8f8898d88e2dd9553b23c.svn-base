@@ -1,0 +1,161 @@
+package modelo;
+
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Iterator;
+import java.util.Observable;
+import java.util.Observer;
+
+public class Caja implements Observer {
+	private IEstadoCaja estadoCaja;
+	private VentasRepository repositorioVentas;
+	private OfertasRepository repositorioOfertas;
+	private IVenta ventaEnCurso;
+	private int cajaNro;
+	private String sucursal;
+
+	public int getCajaNro() {
+		return cajaNro;
+	}
+
+	public String getSucursal() {
+		return sucursal;
+	}
+
+	public Caja(int cajaNro, String sucursal,
+			OfertasRepository ofertasRepository) {
+		this.repositorioVentas = new VentasRepository();
+		this.repositorioOfertas = ofertasRepository;
+		this.cajaNro = cajaNro;
+		this.sucursal = sucursal;
+		ventaEnCurso = new Venta(Calendar.getInstance(), cajaNro);
+		estadoCaja = CajaCerrada.getInstance();
+	}
+
+	public void abrirCaja() {
+		estadoCaja.puedeAbrirCaja();
+		estadoCaja = CajaAbierta.getInstance();
+	}
+
+	public void addProducto(Producto producto, int cantidad) {
+		estadoCaja.puedeAgregarProducto();
+		ventaEnCurso.addProducto(producto, cantidad);
+		repositorioOfertas.aplicarOfertas(ventaEnCurso);
+	}
+
+	public void iniciarVenta() {
+		estadoCaja.puedeIniciarVenta();
+		ventaEnCurso = new Venta(Calendar.getInstance(), cajaNro);
+		((Venta) ventaEnCurso).addObserver(this);
+		estadoCaja = CajaEfectuandoVenta.getInstance();
+		imprimirCabecera();
+	}
+
+	public void confirmarVenta(String formaDePago) {
+		estadoCaja.puedeConfirmarVenta();
+		ventaEnCurso.setFormaDePago(formaDePago);
+		repositorioOfertas.aplicarOfertas(ventaEnCurso);
+		ventaEnCurso.cobrar();
+		imprimirTotalVentaActual();
+		repositorioVentas.add(ventaEnCurso);
+		estadoCaja = CajaAbierta.getInstance();
+	}
+
+	public void cancelarVenta() {
+		estadoCaja.puedeCancelarventa();
+		imprimirVentaCancelada();
+		estadoCaja = CajaAbierta.getInstance();
+	}
+
+	public void cerrarCaja() {
+		estadoCaja.puedeCerrarCaja();
+		estadoCaja = CajaCerrada.getInstance();
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		imprimirLinea();
+	}
+
+	public void imprimirTotalPorMediosDePago() {
+		DecimalFormat df = new DecimalFormat("0.00");
+		System.out.println("Total de la caja nro." + cajaNro
+				+ " discriminado por medio de pago");
+
+		ArrayList<String> mediosDePago = repositorioVentas.getMediosDePago();
+		for (Iterator<String> it = mediosDePago.iterator(); it.hasNext();) {
+			String medioPago = it.next();
+			String total = df.format(repositorioVentas
+					.calcularTotalMedioDePago(cajaNro, medioPago));
+			System.out.println("\t" + medioPago + ": " + total);
+		}
+
+	}
+
+	public void imprimirTotalCaja() {
+		DecimalFormat df = new DecimalFormat("0.00");
+		System.out.println("Total en la caja: $"
+				+ df.format(repositorioVentas.calcularTotalCaja(cajaNro)));
+	}
+
+	public void ImprimirTotalDescuentos() {
+		DecimalFormat df = new DecimalFormat("0.00");
+		System.out.println("Total de los descuentos aplicados: $"
+				+ df.format(repositorioVentas
+						.calcularTotalDescuentosCaja(cajaNro)));
+	}
+
+	private void imprimirLinea() {
+		System.out.println(ventaEnCurso.getUltimaLinea());
+	}
+
+	private void imprimirTotalVentaActual() {
+		DecimalFormat df = new DecimalFormat("0.00");
+		System.out.println("Total de la compra sin descuentos: "
+				+ df.format(ventaEnCurso.getTotalSinDescuentos()));
+		System.out.println("Total descuentos: "
+				+ df.format(ventaEnCurso.getTotalDescuentos()));
+		System.out.println("Total de la compra: "
+				+ df.format(ventaEnCurso.getTotal()));
+	}
+
+	private void imprimirVentaCancelada() {
+		System.out.println("Compra Cancelada");
+	}
+
+	private void imprimirCabecera() {
+		System.out.println();
+		System.out.println("Bienvenido al Supermercado Sin Nombre");
+		System.out.println("Sucursal: " + sucursal + " Caja: " + cajaNro);
+	}
+
+	public boolean canjearCupon(int idCupon) {
+
+		IOferta oferta = repositorioOfertas.getOfertaDelCupon(idCupon);
+
+		if (oferta != null) {
+			oferta.aplicarOferta(ventaEnCurso);
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
+	public double getTotalCaja() {
+
+		return repositorioVentas.calcularTotalCaja(cajaNro);
+	}
+
+	public void setEsJubilado() {
+
+		ventaEnCurso.setEsJubilado(true);
+	}
+
+	public VentasRepository getVentasRepository() {
+		return this.repositorioVentas;
+
+	}
+
+}

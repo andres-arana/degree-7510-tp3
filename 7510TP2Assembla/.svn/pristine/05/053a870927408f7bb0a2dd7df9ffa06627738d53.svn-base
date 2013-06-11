@@ -1,0 +1,35 @@
+package modelo;
+
+public class LineItemOferta extends LineItem {
+	private double montoUnitario;
+	private String detalle;
+	
+	public LineItemOferta(String detalleOferta, int cantidad, double montoUnitario, int numeroLinea) {
+		super(cantidad, numeroLinea);
+		this.montoUnitario = montoUnitario;
+		this.detalle = detalleOferta;
+	}
+
+	@Override
+	public double montoUnitario() {
+		return montoUnitario;
+	}
+
+	@Override
+	public double montoTotal() {
+		return montoUnitario * super.getCantidad();
+	}
+
+	@Override
+	public String descripcion() {
+		return detalle;
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder out = new StringBuilder();
+		out.append(super.getCantidad() + "\t" + "Descuento " + detalle + "\t" + montoUnitario+ "\t" + "-" + montoTotal());
+		return out.toString();
+	}
+
+}

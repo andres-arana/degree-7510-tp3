@@ -1,0 +1,94 @@
+package modelo;
+
+import java.util.Calendar;
+import java.util.Observable;
+import java.util.Observer;
+
+import datos.InyectorDeDatos;
+
+
+public class Caja implements Observer {
+	private IEstadoCaja estadoCaja;
+	private VentasRepository repositorioVentas;
+	private OfertasRepository repositorioOfertas;
+	private ProductosRepository repositorioProductos;
+	private IVenta ventaEnCurso;
+	private int cajaNro;
+	private String sucursal;
+	
+	public int getCajaNro() {
+		return cajaNro;
+	}
+
+	public String getSucursal() {
+		return sucursal;
+	}
+
+	public Caja(int cajaNro, String sucursal) {
+		this.repositorioVentas = new VentasRepository();
+		this.repositorioOfertas = new OfertasRepository();
+		this.repositorioProductos = new ProductosRepository();
+		InyectorDeDatos.inyectarProductos(repositorioProductos);
+		InyectorDeDatos.inyectarOfertas(repositorioOfertas);
+		this.cajaNro = cajaNro;
+		this.sucursal = sucursal;
+		ventaEnCurso = new Venta(Calendar.getInstance(), cajaNro);
+		estadoCaja = CajaCerrada.getInstance();
+	}
+	
+	public void abrirCaja(){
+		estadoCaja.puedeAbrirCaja();
+		estadoCaja = CajaAbierta.getInstance();		
+	}
+	
+	public void addProducto(Producto producto, int cantidad) {
+		estadoCaja.puedeAgregarProducto();
+		ventaEnCurso.addProducto(producto, cantidad);
+		repositorioOfertas.aplicarOfertas(ventaEnCurso);
+	}
+	
+	public void iniciarVenta() {
+		estadoCaja.puedeIniciarVenta();
+		ventaEnCurso = new Venta(Calendar.getInstance(), cajaNro);
+		((Venta)ventaEnCurso).addObserver(this);
+		estadoCaja = CajaEfectuandoVenta.getInstance();
+		imprimirCabecera();
+	}
+		
+	public void confirmarVenta(String formaDePago) {
+		estadoCaja.puedeConfirmarVenta();
+		ventaEnCurso.cobrar(formaDePago);
+		imprimirTotal();
+		repositorioVentas.add(ventaEnCurso);
+		estadoCaja = CajaAbierta.getInstance();
+	}
+	
+	public void cancelarVenta() {
+		estadoCaja.puedeCancelarventa();
+		estadoCaja = CajaAbierta.getInstance();
+	}	
+	
+	public void cerrarCaja() {
+		estadoCaja.puedeCerrarCaja();
+		estadoCaja = CajaCerrada.getInstance();
+	}	
+
+	@Override
+	public void update(Observable o, Object arg) {
+		imprimirLinea();		
+	}
+	
+	private void imprimirLinea() {
+		System.out.println(ventaEnCurso.getUltimaLinea());
+	}
+	
+	private void imprimirTotal() {
+		System.out.println("Total de la compra sin descuentos: " + ventaEnCurso.getTotalSinDescuentos());
+		System.out.println("Total descuentos: " + ventaEnCurso.getTotalDescuentos());
+		System.out.println("Total de la compra: " + ventaEnCurso.getTotal());
+	}
+	
+	private void imprimirCabecera() {
+		System.out.println("Sucursal: " + sucursal + " Caja: " + cajaNro);
+	}	
+}

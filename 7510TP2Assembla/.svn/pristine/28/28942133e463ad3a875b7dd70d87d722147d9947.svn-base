@@ -1,0 +1,9 @@
+package modelo;
+
+public interface ICondicionOferta {
+	
+	boolean chequearCondicion(IVenta venta);
+	public void aplicarCondicion(IVenta venta);
+	public boolean isRecurrente();
+
+}

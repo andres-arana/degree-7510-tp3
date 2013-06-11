@@ -1,0 +1,37 @@
+package modelo.condiciones;
+
+import java.util.List;
+
+import modelo.CondicionRecurrente;
+import modelo.IVenta;
+import modelo.LineItemProducto;
+
+public class CondicionLlevaNProductosDeCategoriaX extends CondicionRecurrente {
+	private int cantidad;
+	private String categoria;
+	
+	public CondicionLlevaNProductosDeCategoriaX(int cantidad, String categoria) {
+		this.cantidad = cantidad;
+		this.categoria = categoria;
+	}
+	
+	@Override
+	public boolean chequearCondicion(IVenta venta) {
+		int encontrados = 0;
+		List<LineItemProducto>items = venta.getProductos();
+		for (LineItemProducto lineItem : items) {
+			if (lineItem.getCategoriaProducto() == categoria) {
+				encontrados += lineItem.getCantidad() - lineItem.getProductosConOfertasPorProductoAplicadas();
+				if (encontrados >= cantidad)
+					return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public void aplicarCondicion(IVenta venta) {
+		venta.marcarProductosOfertadosPorCategoria(cantidad, categoria);
+	}
+
+}

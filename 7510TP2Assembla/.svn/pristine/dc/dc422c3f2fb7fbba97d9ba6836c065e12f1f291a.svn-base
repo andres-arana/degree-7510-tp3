@@ -1,0 +1,27 @@
+package modelo;
+
+import java.util.ArrayList;
+import java.util.List;
+
+
+public class OfertasRepository {
+	private List<IOferta> ofertas;
+	
+	public OfertasRepository() {
+		ofertas = new ArrayList<IOferta>();
+	}
+	
+	public void addOferta(IOferta oferta) {
+		ofertas.add(oferta);
+	}
+	
+	public void aplicarOfertas(IVenta venta) {
+		for (IOferta oferta : ofertas) {
+			while (oferta.chequearCondiciones(venta)) { 
+				oferta.aplicarOferta(venta);
+				if (oferta.isRecurrente() == false)
+					break;
+			}
+		}
+	}
+}

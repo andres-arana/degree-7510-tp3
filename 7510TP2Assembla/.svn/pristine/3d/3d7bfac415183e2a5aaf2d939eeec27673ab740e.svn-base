@@ -1,0 +1,22 @@
+package tests.Modelo;
+
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
+import java.util.Calendar;
+
+import modelo.Producto;
+import modelo.Venta;
+
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+public class VentaTest {
+
+	@BeforeClass
+	public static void setUpBeforeClass() throws Exception {
+	}
+
+
+
+
+}
