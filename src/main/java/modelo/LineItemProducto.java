@@ -5,7 +5,7 @@ import java.text.DecimalFormat;
 /**
  * Un LineItemProducto representa un producto que pertenece a una venta
  * LLeva la cuenta de a cuantas unidades se le aplicaron una oferta de tipo 
- * por producto y de a cu�ntas por tipo categor�a o marca.
+ * por producto y de a cuantas por tipo categoria o marca.
  * El control anterior sirve para saber si luego de aplicar una oferta a este producto, 
  * la misma puede ser vuelta a aplicar al resto de las unidades. 
  * 

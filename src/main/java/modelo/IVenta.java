@@ -4,7 +4,7 @@ import java.util.Calendar;
 import java.util.List;
 /**
  * Interfaz para definir metodos de una venta. 
- * La venta est� compuesta por productos y las ofertas aplicadas
+ * La venta esta compuesta por productos y las ofertas aplicadas
  * a dichos productos o a la venta en general
  * 
  * @author Grupo 15
@@ -63,7 +63,7 @@ public interface IVenta {
 
 	/**
 	 * Marca todos los productos como que tienen una oferta aplicada, salvo
-	 * que el producto est� dentro de la lista de excepciones a los cuales
+	 * que el producto esta dentro de la lista de excepciones a los cuales
 	 * la oferta no aplica
 	 * @param query: objeto que define con que criterio se buscan los productos para marcarlos
 	 * @param excepciones: lista de productos para los cuales la oferta no aplica
@@ -81,6 +81,4 @@ public interface IVenta {
 	boolean esJubilado();
 
 	int getTotalPuntos();
-
-
 }
