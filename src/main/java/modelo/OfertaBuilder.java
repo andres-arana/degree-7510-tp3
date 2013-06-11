@@ -5,7 +5,7 @@ import java.util.Calendar;
 /**
  * Una oferta puede estar conformada por varias condiciones y varias acciones. 
  * OfertaBuilder permite agregar todas la condiciones y acciones necesarias 
- * y a partir de ellas crear la oferta en cuestión. 
+ * y a partir de ellas crear la oferta en cuestion. 
  * 
  * @author Grupo 15
  *

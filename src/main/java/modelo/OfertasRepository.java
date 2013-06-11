@@ -26,7 +26,7 @@ public class OfertasRepository {
 	}
 
 	/**
-	 * Dada una venta se verifica si se puede aplicar una o más
+	 * Dada una venta se verifica si se puede aplicar una o mas
 	 * ofertas contenidas en este repositorio. 
 	 * 
 	 * @param venta: objeto tipo IVenta al cual se aplican las ofertas
@@ -42,9 +42,9 @@ public class OfertasRepository {
 	}
 
 	/**
-	 * Devuelve la oferta que corresponde a un cupón. 
-	 * @param idCupon: identificador del cupón
-	 * @return objeto tipo IOferta que corresponde al cupón dado. 
+	 * Devuelve la oferta que corresponde a un cupon. 
+	 * @param idCupon: identificador del cupon
+	 * @return objeto tipo IOferta que corresponde al cupon dado. 
 	 */
 	public IOferta getOfertaDelCupon(int idCupon) {
 

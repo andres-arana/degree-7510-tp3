@@ -1,8 +1,8 @@
 package modelo;
 
 /**
- * Interfaz para determinar el comportamiento v·lido de la caja en base
- * al estado en que se encuentra. Por ejemplo, si la caja no est· abierta
+ * Interfaz para determinar el comportamiento v√°lido de la caja en base
+ * al estado en que se encuentra. Por ejemplo, si la caja no est√° abierta
  * no se puede agregar un prodcuto. 
  * 
  * @author Grupo 15

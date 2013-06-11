@@ -160,7 +160,7 @@ public class InyectorDeDatos {
 		// Oferta 6
 		ofertaBuilder
 				.crearNuevaOferta(ofertaDesde, ofertaHasta,
-						"LLevando 3 o más productos Granja del Sol 10% en todos sus productos");
+						"LLevando 3 o mas productos Granja del Sol 10% en todos sus productos");
 		ofertaBuilder.agregarCondicion(condicionOfertaFactory
 				.CondicionLlevaNProductosDeMarcaX(3, "Granja del Sol"));
 		ofertaBuilder.agregarAccion(accionOfertaFactory

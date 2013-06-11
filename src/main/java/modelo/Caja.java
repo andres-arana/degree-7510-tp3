@@ -9,7 +9,6 @@ public class Caja implements Observer {
 	private IEstadoCaja estadoCaja;
 	private VentasRepository repositorioVentas;
 	private OfertasRepository repositorioOfertas;
-	private final ClienteRepository clientesRepository;
 	private IVenta ventaEnCurso;
 	private int cajaNro;
 	private String sucursal;
@@ -24,11 +23,9 @@ public class Caja implements Observer {
 
 	public Caja(int cajaNro, String sucursal,
 			OfertasRepository ofertasRepository,
-			VentasRepository ventasRepository,
-			ClienteRepository clientesRepository) {
+			VentasRepository ventasRepository) {
 		this.repositorioVentas = ventasRepository;
 		this.repositorioOfertas = ofertasRepository;
-		this.clientesRepository = clientesRepository;
 		this.cajaNro = cajaNro;
 		this.sucursal = sucursal;
 		ventaEnCurso = new Venta(Calendar.getInstance(), cajaNro);
@@ -55,10 +52,7 @@ public class Caja implements Observer {
 	}
 
 	public void confirmarVenta(final String formaDePago, final String dni) {
-		Cliente c = clientesRepository.getOrCreateByDNI(dni);
-		
 		confirmarVenta(formaDePago);
-		c.setPuntos(c.getPuntos() + ventaEnCurso.getTotalPuntos());
 	}
 
 	public void confirmarVenta(final String formaDePago) {

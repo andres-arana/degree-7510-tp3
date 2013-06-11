@@ -14,7 +14,7 @@ import java.util.TreeMap;
 /**
  * Clase para almacenar todas las ventas de una sucursal. 
  * Permite calcular totales de caja, de descuentos, de medios
- * de pago y ranking de productos más vendidos. 
+ * de pago y ranking de productos mas vendidos. 
  * 
  * @author Grupo 15
  *

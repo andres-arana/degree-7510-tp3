@@ -1,8 +1,8 @@
 package modelo;
 
 /**
- * Interfaz para definir un criterio de búsqueda de productos. 
- * Por ejemplo, por categoría, marca, id, etc. 
+ * Interfaz para definir un criterio de busqueda de productos. 
+ * Por ejemplo, por categoria, marca, id, etc. 
  * @author Grupo 15
  *
  */

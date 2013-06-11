@@ -3,8 +3,8 @@ package modelo;
 /**
  * Clase pada representar los elementos que componen una venta. 
  * Dichos elementos pueden ser productos u ofertas. 
- * Un LineItem está compuesto por: un número de linea, cantidad, monto unitario, 
- * monto total y descripción
+ * Un LineItem esta compuesto por: un numero de linea, cantidad, monto unitario, 
+ * monto total y descripcion
  * 
  * @author Grupo 15
  *
