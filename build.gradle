@@ -15,7 +15,7 @@ jar {
 }
 
 // Application assembly properties
-mainClassName = ""
+mainClassName = "app.Main"
 
 // Dependency repositories
 repositories {

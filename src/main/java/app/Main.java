@@ -1,4 +1,4 @@
-package main;
+package app;
 import modelo.Caja;
 import modelo.OfertasRepository;
 import modelo.ProductosRepository;
