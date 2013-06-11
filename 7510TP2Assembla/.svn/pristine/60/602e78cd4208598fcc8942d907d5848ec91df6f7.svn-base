@@ -1,7 +1,0 @@
-package modelo;
-
-public interface IAccionOferta {
-
-	void ejecutarAccion(IVenta venta, String detalleOferta);
-
-}

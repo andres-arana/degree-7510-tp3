@@ -1,5 +1,0 @@
-package modelo;
-
-public interface IQuery {
-	public boolean query(Producto productoAComparar);
-}
