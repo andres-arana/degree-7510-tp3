@@ -102,7 +102,7 @@ public class VentasRepository {
 
 		for (Iterator<IVenta> it = ventas.iterator(); it.hasNext();) {
 			IVenta venta = it.next();
-			List<LineItemProducto> listaLineItem = venta.getProductos();
+			List<LineItemProducto> listaLineItem = venta.getItemsProducto();
 
 			for (Iterator<LineItemProducto> itP = listaLineItem.iterator(); itP
 					.hasNext();) {

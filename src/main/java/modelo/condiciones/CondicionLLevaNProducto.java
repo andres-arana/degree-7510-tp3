@@ -21,7 +21,7 @@ public class CondicionLLevaNProducto extends CondicionRecurrente {
 
 	@Override
 	public boolean chequearCondicion(IVenta venta) {
-		List<LineItemProducto> items = venta.getProductos();
+		List<LineItemProducto> items = venta.getItemsProducto();
 		for (LineItemProducto lineItem : items) {
 			if (lineItem.getProducto().getId() == producto.getId()) {
 				if (lineItem.getCantidad()

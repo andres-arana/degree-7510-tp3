@@ -16,7 +16,7 @@ public class CondicionCategoria extends CondicionNoRecurrente {
 
 	@Override
 	public boolean chequearCondicion(IVenta venta) {
-		List<LineItemProducto> items = venta.getProductos();
+		List<LineItemProducto> items = venta.getItemsProducto();
 		for (LineItemProducto lineItem : items) {
 			if ((lineItem.getProducto().getCategoria() == categoria)
 					&& (lineItem.getCantidad()

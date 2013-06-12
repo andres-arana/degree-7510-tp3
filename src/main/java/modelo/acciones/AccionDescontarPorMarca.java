@@ -29,7 +29,7 @@ public class AccionDescontarPorMarca implements IAccionOferta {
 
 	@Override
 	public void ejecutarAccion(IVenta venta, String detalleOferta) {
-		List<LineItemProducto> items = venta.getProductos();
+		List<LineItemProducto> items = venta.getItemsProducto();
 		for (LineItemProducto lineItem : items) {
 			int cantidad = lineItem.getCantidad()
 					- lineItem

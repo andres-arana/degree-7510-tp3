@@ -28,7 +28,7 @@ public class Caja implements Observer {
 		this.repositorioOfertas = ofertasRepository;
 		this.cajaNro = cajaNro;
 		this.sucursal = sucursal;
-		ventaEnCurso = new Venta(Calendar.getInstance(), cajaNro);
+		ventaEnCurso = new Venta(null, Calendar.getInstance(), cajaNro);
 		estadoCaja = CajaCerrada.getInstance();
 	}
 
@@ -42,10 +42,14 @@ public class Caja implements Observer {
 		ventaEnCurso.addProducto(producto, cantidad);
 		repositorioOfertas.aplicarOfertas(ventaEnCurso);
 	}
-
+	
 	public void iniciarVenta() {
+		iniciarVenta(null);
+	}
+	
+	public void iniciarVenta(final Cliente cliente) {
 		estadoCaja.puedeIniciarVenta();
-		ventaEnCurso = new Venta(Calendar.getInstance(), cajaNro);
+		ventaEnCurso = new Venta(cliente, Calendar.getInstance(), cajaNro);
 		((Venta) ventaEnCurso).addObserver(this);
 		estadoCaja = CajaEfectuandoVenta.getInstance();
 		imprimirCabecera();
@@ -126,9 +130,5 @@ public class Caja implements Observer {
 	public void setEsJubilado() {
 
 		ventaEnCurso.setEsJubilado(true);
-	}
-
-	public int getPuntosObtenidos() {
-		return ventaEnCurso.getTotalPuntos();
 	}
 }

@@ -14,7 +14,6 @@ import modelo.LineItemProducto;
 import modelo.Producto;
 import modelo.Venta;
 
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class VentaTests {
@@ -33,7 +32,7 @@ public class VentaTests {
 
 		venta.marcarTodosLosProductosOfertados(query, new ArrayList<Producto>());
 
-		List<LineItemProducto> lineItems = venta.getProductos();
+		List<LineItemProducto> lineItems = venta.getItemsProducto();
 		assertEquals("La cantidad de unidades marcadas como ofertadas es incorrecta",lineItems.get(0)
 				.getProductosConOfertasPorCategoriaOMarcaAplicadas(),
 				cantidadaUnidades);
@@ -62,7 +61,7 @@ public class VentaTests {
 
 		venta.marcarTodosLosProductosOfertados(query, productosQueNoAplican);
 
-		List<LineItemProducto> lineItems = venta.getProductos();
+		List<LineItemProducto> lineItems = venta.getItemsProducto();
 		int cantidadProductosConOferta = lineItems.get(0)
 				.getProductosConOfertasPorCategoriaOMarcaAplicadas();
 		cantidadProductosConOferta += lineItems.get(1)

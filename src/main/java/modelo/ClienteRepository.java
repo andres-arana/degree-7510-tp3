@@ -14,7 +14,7 @@ public class ClienteRepository {
 		if (clientes.containsKey(dni)) {
 			return clientes.get(dni);
 		} else {
-			Cliente cliente = new Cliente(dni, 0);
+			Cliente cliente = new Cliente(dni);
 			clientes.put(dni, cliente);
 			return cliente;
 		}

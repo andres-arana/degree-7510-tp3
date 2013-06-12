@@ -7,16 +7,18 @@ import java.util.List;
 import java.util.Observable;
 
 /**
- * Clase para implementar interfaz de IVenta. Al agregar un producto
- * o aplicar una oferta informa a los observadores para notificar el cambio
+ * Clase para implementar interfaz de IVenta. Al agregar un producto o aplicar
+ * una oferta informa a los observadores para notificar el cambio
+ * 
  * @author Yamil
- *
+ * 
  */
 public class Venta extends Observable implements IVenta {
 	private enum UltimoLineItem {
 		OFERTA, PRODUCTO
 	}
 
+	private final Cliente cliente;
 	private List<LineItemProducto> items;
 	private List<LineItemOferta> ofertasAplicadas;
 	private LineItemFactory lineItemFactory;
@@ -28,11 +30,15 @@ public class Venta extends Observable implements IVenta {
 	int nroCaja;
 	boolean esJubilado;
 
-	public List<LineItemProducto> getProductos() {
+	public List<LineItemProducto> getItemsProducto() {
 		return Collections.unmodifiableList(items);
 	}
-
+	
 	public Venta(Calendar fechaVenta, int nroCaja) {
+		this(null, fechaVenta, nroCaja);
+	}
+
+	public Venta(Cliente cliente, Calendar fechaVenta, int nroCaja) {
 		this.items = new ArrayList<LineItemProducto>();
 		this.ofertasAplicadas = new ArrayList<LineItemOferta>();
 		this.lineItemFactory = new LineItemFactory();
@@ -42,6 +48,7 @@ public class Venta extends Observable implements IVenta {
 		this.formaDePago = "";
 		this.nroCaja = nroCaja;
 		this.esJubilado = false;
+		this.cliente = cliente;
 	}
 
 	@Override
@@ -198,14 +205,9 @@ public class Venta extends Observable implements IVenta {
 	}
 
 	@Override
-	public int getTotalPuntos() {
-		int resultado = 0;
-		for (LineItemProducto item : items) {
-			resultado += item.procesarPuntaje();
+	public void registrarPuntosEnCliente(int puntos) {
+		if (this.cliente != null) {
+			this.cliente.asignarPuntos(puntos);
 		}
-		return resultado;
 	}
-
-
-
 }

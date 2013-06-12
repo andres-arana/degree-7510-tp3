@@ -56,11 +56,6 @@ public class LineItemProducto extends LineItem {
 		return producto.getPrecio() * super.getCantidad();
 	}
 	
-	
-	public int procesarPuntaje(){
-		return (int)(producto.getPuntajeAsociado() * this.getCantidad());
-	}
-
 	@Override
 	public String descripcion() {
 		return producto.getDescripcion();

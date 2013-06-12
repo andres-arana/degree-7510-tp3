@@ -7,29 +7,13 @@ public class Producto {
 	private String categoria;
 	private String marca;
 
-	private float puntajeAsociado = 0.f;
-	
 	public Producto(String descripcion, double precio, int id,
-			String categoria, String marca, float puntaje) {
+			String categoria, String marca) {
 		this.descripcion = descripcion;
 		this.precio = precio;
 		this.id = id;
 		this.categoria = categoria;
 		this.marca = marca;
-		this.puntajeAsociado = puntaje;
-	}
-	
-	public Producto(String descripcion, double precio, int id,
-			String categoria, String marca) {
-		this(descripcion, precio, id, categoria, marca,0);
-	}
-
-	public float getPuntajeAsociado() {
-		return puntajeAsociado;
-	}
-
-	public void setPuntajeAsociado(float puntajeAsociado) {
-		this.puntajeAsociado = puntajeAsociado;
 	}
 
 	public String getDescripcion() {
