@@ -90,15 +90,86 @@ durante la implementación de las extensiones al diseño.
 
 \section{Análisis comparativo de diseño}
 
+[TODO: Introducción al análisis. Mencionar que no es un análisis exhaustivo,
+sólamente cosas que vimos cuando estabamos viendo que hacíamos]
+
 \subsection{Puntos positivos}
+
+[TODO: Algunas ideas de cosas que estaban mejor que nuestro tp:
+
+  * API para construir ofertas de una manera más amigable, usando el patrón
+  builder. En nuestro TP armar las ofertas es medio parto.
+
+  * Ofertas recurrentes y no recurrentes. Si bien el nombre no es
+  representativo de lo que hacen y la implementación no es ideal, la lógica
+  de reaplicar la oferta asociada hasta que la condicion sea falsa es interesante
+  y constituye un concepto poderoso en la implementación de ofertas exclusivas.
+]
 
 \subsection{Críticas}
 
+[TODO: Agregar cosas que no están tan buenas del diseño del tp que nos toco. Algunas ideas:
+  * Mala separación de responsabilidades, en particular en lo relacionado a
+  la presentación y al modelo. Prints en el código del modelo por todos
+  lados que salían incluso al momento de correr los tests.
+
+  * Si bien el diseño existente separa la condición de aplicabilidad de las
+  ofertas de la acción a ejecutar cuando la oferta es aplicada,
+  consideramos el nivel de granularidad de estas responsabilidades es demasiado
+  grueso para poder implementar el esquema de puntos reutilizando los bloques ya
+  desarrollados. Decidimos continuar trabajando en el nivel de granularidad ya
+  definido, aunque sería bueno hacer más granular la composición de las
+  condiciones y de las acciones de las ofertas en un refactor posterior para
+  poder tener mayor combinatoria al implementar las nuevas ofertas.
+
+  * Sería necesaria una lógica más genérica de marcar productos para ofertas
+  exclusivas. En este momento, cada oferta que es exclusiva con otras
+  requiere que se modifique el producto para que almacene una nueva cantidad de
+  aplicación (por ejemplo, cantidad que tiene aplicadas ofertas por producto,
+  cantidad que tiene aplicadas ofertas por marca y categoría, etc.). Sería
+  interesante agregar un esquema más genérico de categorización de estas
+  cantidades.
+
+  * Abstracciones por el sólo hecho de tener una indirección, complicando la
+  navegabilidad del código sin motivo aparente. Ej: IVenta-Venta, qué motivo
+  hay para variar la implementación de la venta cuando hay una sóla? Esto es
+  discutible igual, pero me parece que abstraer porque sí complica el código al
+  pedo.
+
+  * Se podría mejorar algo la calidad de código. Algunos métodos son largos y
+  difíciles de entender, no existe documentación dentro del código (sea javadoc
+  o código autodocumentado), no hay convenciones claras del estilo de código,
+  variables y métodos con nombres super-largos y procedurales, etc.  etc.
+
+  * Relacionado con lo anterior. No se siguen las convenciones ni idioms
+  propios de Java, el lenguaje que eligieron para implementar el trabajo
+  práctico. No se respetan las convenciones de nombres generales del lenguaje,
+  no se utilizan idioms como inmutabilidad a través de final, etc.
+
+]
+
 \section{Extensión del diseño}
+
+[TODO: Intro a los nuevos requisitos.]
 
 \subsection{Alternativas de diseño}
 
+[TODO: Describir las dos alternativas: sistema paralelo o adaptar el sistema de
+ofertas. Concluir con que decidimos adaptar el sistema de ofertas.]
+
 \subsection{Dificultades en la implementación}
+
+[TODO: Describir problemas que tuvimos:
+
+  * Problemas con el momento en el que se aplican las ofertas. Se aplicaban
+  cada vez que se agregaba un producto. El problema estaba en que se
+  reaplicaban algunas ofertas. Para solucionarlo, el diseño incluye algunos
+  hacks medios feos: por ejemplo, las ofertas globales acumulan un porcentaje
+  de descuento que se aplica al final únicamente, en vez de agregar registros
+  de descuentos individuales a la venta (como lo hacen el resto de las ofertas
+  locales).
+
+]
 
 \end{document}
 
