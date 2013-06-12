@@ -55,11 +55,7 @@ public class Caja implements Observer {
 		imprimirCabecera();
 	}
 
-	public void confirmarVenta(final String formaDePago, final String dni) {
-		confirmarVenta(formaDePago);
-	}
-
-	public void confirmarVenta(final String formaDePago) {
+	public IVenta confirmarVenta(final String formaDePago) {
 		estadoCaja.puedeConfirmarVenta();
 		ventaEnCurso.setFormaDePago(formaDePago);
 		repositorioOfertas.aplicarOfertas(ventaEnCurso);
@@ -67,6 +63,7 @@ public class Caja implements Observer {
 		imprimirTotalVentaActual();
 		repositorioVentas.add(ventaEnCurso);
 		estadoCaja = CajaAbierta.getInstance();
+		return ventaEnCurso;
 	}
 
 	public void cancelarVenta() {
@@ -121,7 +118,7 @@ public class Caja implements Observer {
 		}
 
 	}
-
+	
 	public double getTotalCaja() {
 
 		return repositorioVentas.calcularTotalCaja(cajaNro);
@@ -130,5 +127,9 @@ public class Caja implements Observer {
 	public void setEsJubilado() {
 
 		ventaEnCurso.setEsJubilado(true);
+	}
+
+	public void aplicarPuntos(int puntos) {
+		ventaEnCurso.aplicarPuntos(puntos);
 	}
 }

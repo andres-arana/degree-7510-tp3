@@ -18,6 +18,8 @@ public class Cliente {
 	}
 	
 	public void quitarPuntos(int puntos) {
+		if (puntos > this.puntos)
+			throw new RuntimeException("Se intento aplicar mas puntos de los que tiene el cliente");
 		this.puntos -= puntos;
 	}
 

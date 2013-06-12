@@ -95,4 +95,6 @@ public interface IVenta {
 	boolean esJubilado();
 
 	void registrarPuntosEnCliente(final int puntos);
+
+	void aplicarPuntos(int puntos);
 }

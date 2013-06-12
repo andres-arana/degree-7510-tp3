@@ -210,4 +210,13 @@ public class Venta extends Observable implements IVenta {
 			this.cliente.asignarPuntos(puntos);
 		}
 	}
+
+	@Override
+	public void aplicarPuntos(int puntos) {
+		if (this.cliente == null)
+			throw new RuntimeException("Se intento aplicar puntos a una venta sin cliente");
+		
+		this.cliente.quitarPuntos(puntos);
+		this.addOferta("Puntos aplicados", puntos, 1);
+	}
 }
