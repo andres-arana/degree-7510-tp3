@@ -56,6 +56,11 @@ public class LineItemProducto extends LineItem {
 		return producto.getPrecio() * super.getCantidad();
 	}
 	
+	public double montoTotalSinOfertasPorProductoAplicadas() {
+		int cantidad = getCantidad() - productosConOfertasPorProductoAplicadas;
+		return cantidad * producto.getPrecio();
+	}
+	
 	@Override
 	public String descripcion() {
 		return producto.getDescripcion();
@@ -69,5 +74,4 @@ public class LineItemProducto extends LineItem {
 				+ df.format(montoTotal()));
 		return out.toString();
 	}
-
 }

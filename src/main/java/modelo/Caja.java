@@ -40,7 +40,6 @@ public class Caja implements Observer {
 	public void addProducto(Producto producto, int cantidad) {
 		estadoCaja.puedeAgregarProducto();
 		ventaEnCurso.addProducto(producto, cantidad);
-		repositorioOfertas.aplicarOfertas(ventaEnCurso);
 	}
 	
 	public void iniciarVenta() {

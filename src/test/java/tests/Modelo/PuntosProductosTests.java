@@ -13,7 +13,7 @@ import modelo.condiciones.CondicionLLevaNProducto;
 
 import org.junit.Test;
 
-public class ProductosConPuntajeTests extends AbstractOfertasTest {
+public class PuntosProductosTests extends AbstractOfertasTest {
 	@Test
 	public void deberiaAcumularPuntos() {
 		ProductosRepository productos = buildProductos(coca(), tv());
