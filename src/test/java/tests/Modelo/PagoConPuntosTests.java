@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import modelo.Caja;
 import modelo.Cliente;
 import modelo.IVenta;
-import modelo.Oferta;
 import modelo.OfertasRepository;
 import modelo.Producto;
 import modelo.ProductosRepository;
@@ -12,7 +11,7 @@ import modelo.VentasRepository;
 
 import org.junit.Test;
 
-public class PagoConPuntosTests {
+public class PagoConPuntosTests extends AbstractOfertasTest {
 	@Test
 	public void deberiaPoderPagarConPuntos() {
 		ProductosRepository productos = buildProductos(coca(), vino());
@@ -32,22 +31,6 @@ public class PagoConPuntosTests {
 
 		assertEquals(0, cliente.getPuntos());
 		assertEquals(4.0, venta.getTotal(), 0.01);
-	}
-
-	private OfertasRepository buildOfertas(Oferta... ofertas) {
-		OfertasRepository resultado = new OfertasRepository();
-		for (Oferta o : ofertas) {
-			resultado.addOferta(o);
-		}
-		return resultado;
-	}
-
-	private ProductosRepository buildProductos(Producto... productos) {
-		ProductosRepository resultado = new ProductosRepository();
-		for (Producto p : productos) {
-			resultado.addProducto(p);
-		}
-		return resultado;
 	}
 
 	private Producto vino() {

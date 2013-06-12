@@ -1,9 +1,6 @@
 package tests.Modelo;
 
 import static org.junit.Assert.assertEquals;
-
-import java.util.Calendar;
-
 import modelo.Caja;
 import modelo.Cliente;
 import modelo.Oferta;
@@ -16,7 +13,7 @@ import modelo.condiciones.CondicionLLevaNProducto;
 
 import org.junit.Test;
 
-public class ProductosConPuntajeTests {
+public class ProductosConPuntajeTests extends AbstractOfertasTest {
 	@Test
 	public void deberiaAcumularPuntos() {
 		ProductosRepository productos = buildProductos(coca(), tv());
@@ -36,14 +33,6 @@ public class ProductosConPuntajeTests {
 		assertEquals(101, cliente.getPuntos());
 	}
 
-	private OfertasRepository buildOfertas(Oferta... ofertas) {
-		OfertasRepository resultado = new OfertasRepository();
-		for (Oferta o : ofertas) {
-			resultado.addOferta(o);
-		}
-		return resultado;
-	}
-
 	private Oferta oferta100Puntos1TV(ProductosRepository productos) {
 		Oferta oferta = ofertaVigente("100 puntos por TV Flat");
 		Producto tv = productos.getProductoById(tvId());
@@ -58,22 +47,6 @@ public class ProductosConPuntajeTests {
 		oferta.addCondicion(new CondicionLLevaNProducto(coca, 10));
 		oferta.addAccion(new AccionAgregarPuntos(1));
 		return oferta;
-	}
-
-	private Oferta ofertaVigente(final String descripcion) {
-		Calendar fechaDesde = Calendar.getInstance();
-		fechaDesde.add(Calendar.DAY_OF_MONTH, -5);
-		Calendar fechaHasta = Calendar.getInstance();
-		fechaHasta.add(Calendar.DAY_OF_MONTH, 5);
-        return new Oferta(fechaDesde, fechaHasta, descripcion);
-	}
-
-	private ProductosRepository buildProductos(Producto... productos) {
-		ProductosRepository resultado = new ProductosRepository();
-		for (Producto p : productos) {
-			resultado.addProducto(p);
-		}
-		return resultado;
 	}
 
 	private Producto tv() {
