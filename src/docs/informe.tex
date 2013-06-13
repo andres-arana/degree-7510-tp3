@@ -90,69 +90,92 @@ durante la implementación de las extensiones al diseño.
 
 \section{Análisis comparativo de diseño}
 
-Luego de recibir el paquete de trabajo del otro grupo, comenzamos por observar 
-los Diagramas de Diseño, entendiendo el panorama amplio de la solución, a
-la vez de realizar un análisis comparativo con nuestro diseño original, 
-para identificar los puntos concretos que difieren y así realizar un posterior 
-análisis de bajo nivel en esa parte del código.
-Además, utilizamos unos minutos para utilizar la aplicación y reconocer las 
-distintas funcionalidades y su forma de uso, lo que nos ayudó a entender mejor 
-las responsabilidades e interacciones de los distintos objetos.
-A continuación se detallan los puntos positivos y negativos en 
-relación a nuestra implementación original, según extensibilidad y resolución 
+Luego de recibir el paquete de trabajo del otro grupo se comenzó por revisar
+los diagramas de diseño para entender el panorama amplio de la solución y
+realizar un análisis comparativo con nuestro diseño original. El objetivo era
+identificar los puntos concretos que difieren y así realizar un posterior
+análisis de bajo nivel en esa sección del código.
+
+A continuación se detallan los puntos positivos y negativos en relación a
+nuestra implementación original, según extensibilidad y capacidad de resolución
 del problema.
 
 \subsection{Puntos positivos}
 
-  * API para construir ofertas de una manera más amigable y dinámica, usando el patrón
-  builder. Este diseño da una mejor experiencia de usuario pudiendo modificar la 
-  información sin cerrar el programa ni editar el programa. Nuestro TP en cambio, 
-  tiene un armado desacoplado pero estático en tiempo de compilación.
+El trabajo recibido tenía algunos puntos positivos interesantes que
+se detallan a continuación:
 
-  * Ofertas recurrentes y no recurrentes. Si bien el nombre no es
-  representativo de lo que hacen y la implementación no es ideal, la lógica
-  de reaplicar la oferta asociada hasta que la condicion sea falsa es interesante
-  y constituye un concepto poderoso en la implementación de ofertas exclusivas.
-  
-  * Diagramas claros y con formato de estilo para una mejor comprensión.
+\begin{enumerate}
+
+  \item Se incluye un API para construir ofertas de una manera más amigable y
+    dinámica, usando el patrón builder. En nuestro diseño el proceso de armado
+    de ofertas es algo trabajoso, debiendo componer las condiciones y
+    descuentos de forma manual.
+
+  \item Se desarrollo el concepto de ofertas recurrentes y no recurrentes. Si
+    bien el nombre que identifica el concepto de recurrencia no es
+    representativo de lo que significa y la implementación no es ideal, la
+    lógica de aplicar la oferta asociada hasta que la condición sea falsa es
+    interesante y constituye un concepto poderoso en la implementación de
+    ofertas exclusivas.
+
+  \item Se incluyen diagramas muchos más claros y con formato de estilo para
+    una mejor comprensión, uno de los puntos más débiles de nuestra entrega
+
+\end{enumerate}
 
 \subsection{Críticas}
 
-  * Si bien el diseño existente separa la condición de aplicabilidad de las
-  ofertas de la acción a ejecutar cuando la oferta es aplicada,
-  consideramos que el nivel de granularidad de estas responsabilidades es demasiado
-  grueso para poder implementar el esquema de puntos reutilizando los bloques ya
-  desarrollados. Decidimos continuar trabajando en el nivel de granularidad ya
-  definido, aunque sería bueno hacer más granular la composición de las
-  condiciones y de las acciones de las ofertas en un refactor posterior para
-  poder tener mayor combinatoria al implementar las nuevas ofertas.
+Se encontraron algunos puntos que se podrían mejorar en la implementación
+recibida, dentro del análisis comparativo con respecto a nuestra entrega que se
+realizó, detallados a continuación:
 
-  * Sería necesaria una lógica más genérica de marcar productos para ofertas
-  exclusivas. En este momento, cada oferta que es exclusiva con otras
-  requiere que se modifique el producto para que almacene una nueva cantidad de
-  aplicación a la oferta. Por ejemplo, cantidad de ofertas que tiene aplicadas por producto,
-  por marca y categoría, etc. Sería interesante agregar un esquema más genérico de 
-  categorización de estas cantidades.
+\begin{enumerate}
 
-  * Existen abstracciones innecesarias que dificultan la navegabilidad del código, la cual 
-  además puede prestar a confusión. Ej: IVenta-Venta: Pensamos que al existir la interfaz, 
-  confunde la usabilidad del código, sugiriendo que puede existir otra implementación de venta
-  distinta cuando a su vez, las reglas de negocio no daban a pensar en una extensión de esta 
-  funcionalidad a futuro.
+  \item Si bien el diseño existente separa la condición de aplicabilidad de las
+    ofertas de la acción a ejecutar cuando la oferta es aplicada, consideramos
+    que el nivel de granularidad de estas responsabilidades es demasiado grueso
+    para poder implementar el esquema de puntos reutilizando los bloques ya
+    desarrollados. Se decidió continuar trabajando en el nivel de granularidad
+    ya definido, aunque sería bueno hacer más granular la composición de las
+    condiciones y de las acciones de las ofertas en un refactor posterior para
+    poder tener mayor combinatoria al implementar las nuevas ofertas.
+
+  \item Sería necesaria una lógica más genérica de marcar productos para
+    ofertas exclusivas. En este momento, cada oferta que es exclusiva con otras
+    requiere que se modifique el producto para que almacene una nueva cantidad
+    de aplicación a la oferta. Por ejemplo, existe un campo que representa la
+    cantidad de ofertas que tiene aplicadas por producto, otro que representa
+    el mismo concepto pero por marca y categoría, etc. Sería interesante
+    agregar un esquema más genérico de categorización de estas cantidades, en
+    un refactor posterior.
+
+  \item Existen abstracciones innecesarias que dificultan la navegabilidad del
+    código, la cual además puede prestar a confusión, como por ejemplo IVenta -
+    Venta. Consideramos que al existir la interfaz, confunde la usabilidad del
+    código, sugiriendo que puede existir otra implementación de venta distinta
+    cuando las reglas de negocio no sugieren la necesidad de una extensión de
+    esta funcionalidad en un futuro. Más aún, cada cambio a Venta implica un
+    cambio adicional en la interfaz, lo que genera un costo adicional en el
+    mantenimiento del código.
   
-  * Encontramos que la implementación no estaba del todo limpia y organizada. Existe un
-  acoplamiento entre las responsabilidades relacionadas a la presentación y al modelo,
-  como también Prints que parecerían de debug, en el código del modelo por todos
-  lados, los cuales salían incluso al momento de correr los tests.
+  \item Encontramos que la implementación no estaba del todo limpia y
+    organizada. Existe un acoplamiento entre las responsabilidades relacionadas
+    a la presentación y al modelo, como también salidas por pantalla propios de
+    la presentación, en el código del modelo en varios lugares lados, los
+    cuales salían incluso al momento de correr los tests.
 
-  * Calidad de código pobre: Métodos largos y difíciles de entender; No existe documentación 
-  dentro del código (sea javadoc o código autodocumentado); No hay convenciones consistentes
-  del estilo de código; Variables y Métodos con nombres por demás de largos y procedurales.
+  \item La calidad de código es algo pobre: Métodos largos y difíciles de
+    entender; no existe documentación dentro del código (sea javadoc o código
+    auto-documentado); no hay convenciones consistentes del estilo de código;
+    hay variables y métodos con nombres por demás de largos y procedurales.
 
-  * Continuando con la calidad de código, no se ve un buen uso y aprovechamiento del lenguaje 
-  (Java) elegido: No se siguen las convenciones ni idioms propios de Java; No se respetan 
-  las convenciones de nombres generales del lenguaje; Y no se utilizan idioms como 
-  inmutabilidad a través de final, entre otros.
+  \item En relación con la calidad de código, no se ve un buen uso y
+    aprovechamiento de las convenciones e idioms propios del lenguaje (Java)
+    elegido: no se respetan las convenciones de nombres generales del lenguaje;
+    no se utilizan idioms como inmutabilidad a través de final, entre otros.
+
+\end{enumerate}
 
 \section{Extensión del diseño}
 
@@ -165,17 +188,32 @@ ofertas. Concluir con que decidimos adaptar el sistema de ofertas.]
 
 \subsection{Dificultades en la implementación}
 
-[TODO: Describir problemas que tuvimos:
+Durante la implementación del diseño elegido presentado en la sección anterior,
+se encontraron algunos problemas de integración menores que fueron solucionados
+a medida que se avanzaba con la misma. Uno de los problemas reflejaba una
+decisión de diseño que tuvo que ser cambiada para acomodar la nueva
+implementación, y deja entrever una problemática de diseño que podría ser
+refactorizada en modificaciones posteriores. La misma se describe a
+continuación.
 
-  * Problemas con el momento en el que se aplican las ofertas. Se aplicaban
-  cada vez que se agregaba un producto. El problema estaba en que se
-  reaplicaban algunas ofertas. Para solucionarlo, el diseño incluye algunos
-  hacks medios feos: por ejemplo, las ofertas globales acumulan un porcentaje
-  de descuento que se aplica al final únicamente, en vez de agregar registros
-  de descuentos individuales a la venta (como lo hacen el resto de las ofertas
-  locales).
+Existen problemas con respecto al momento en el que se aplican las ofertas.
+Anteriormente se aplicaban cada vez que se agregaba un producto a la venta.  El
+problema de este criterio radica en que se reaplicaban algunas ofertas cada vez
+que se agregaba un nuevo producto. Para solucionarlo, el diseño existente
+incluye algunos workarounds; por ejemplo, las ofertas de descuentos
+porcentuales globales acumulan un porcentaje de descuento en la venta que se
+aplica al final únicamente, en vez de agregar registros de descuentos
+individuales como lo hacen el resto de las ofertas. Más aún, no existe la
+posibilidad de quitar items una vez agregados, dado que esto implicaría
+identificar qué descuentos están aplicados a dichos productos, algo que es
+complicado con el diseño actual.
 
-]
+Se resolvió por quitar la lógica que reaplica los descuentos al agregar cada
+producto, y diferir el cálculo al momento en el que se confirma la venta.
+
+\section{Conclusión}
+
+[TODO: Guitarra]
 
 \end{document}
 
