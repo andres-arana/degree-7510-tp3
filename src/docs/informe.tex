@@ -90,21 +90,31 @@ durante la implementación de las extensiones al diseño.
 
 \section{Análisis comparativo de diseño}
 
-[TODO: Introducción al análisis. Mencionar que no es un análisis exhaustivo,
-sólamente cosas que vimos cuando estabamos viendo que hacíamos]
+Luego de recibir el paquete de trabajo del otro grupo, comenzamos por observar 
+los Diagramas de Diseño, entendiendo el panorama amplio de la solución, a
+la vez de realizar un análisis comparativo con nuestro diseño original, 
+para identificar los puntos concretos que difieren y así realizar un posterior 
+análisis de bajo nivel en esa parte del código.
+Además, utilizamos unos minutos para utilizar la aplicación y reconocer las 
+distintas funcionalidades y su forma de uso, lo que nos ayudó a entender mejor 
+las responsabilidades e interacciones de los distintos objetos.
+A continuación se detallan los puntos positivos y negativos en 
+relación a nuestra implementación original, según extensibilidad y resolución 
+del problema.
 
 \subsection{Puntos positivos}
 
-[TODO: Algunas ideas de cosas que estaban mejor que nuestro tp:
-
-  * API para construir ofertas de una manera más amigable, usando el patrón
-  builder. En nuestro TP armar las ofertas es medio parto.
+  * API para construir ofertas de una manera más amigable y dinámica, usando el patrón
+  builder. Este diseño da una mejor experiencia de usuario pudiendo modificar la 
+  información sin cerrar el programa ni editar el programa. Nuestro TP en cambio, 
+  tiene un armado desacoplado pero estático en tiempo de compilación.
 
   * Ofertas recurrentes y no recurrentes. Si bien el nombre no es
   representativo de lo que hacen y la implementación no es ideal, la lógica
   de reaplicar la oferta asociada hasta que la condicion sea falsa es interesante
   y constituye un concepto poderoso en la implementación de ofertas exclusivas.
-]
+  
+  * Diagramas claros y con formato de estilo para una mejor comprensión.
 
 \subsection{Críticas}
 
