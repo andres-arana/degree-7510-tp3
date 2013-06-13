@@ -179,12 +179,70 @@ realizó, detallados a continuación:
 
 \section{Extensión del diseño}
 
-[TODO: Intro a los nuevos requisitos.]
+Se debía extender el diseño para incorporar el concepto de LRP. La idea general
+es permitir mecanismos que asignen puntos a los clientes registrados del
+mercado por comprar ciertos productos o por abonar montos determinados. Estos
+puntos son intransferibles entre clientes, y pueden ser utilizados para pagar
+una posterior compra, en relación un punto equivalente a un peso.
+
+Para implementar estos requisitos se analizaron dos alternativas de diseño que
+permitiesen incorporar la nueva lógica de negocio. A continuación se detallan
+las alternativas propuestas y se define con más profundidad la elegida e
+implementada.
 
 \subsection{Alternativas de diseño}
 
-[TODO: Describir las dos alternativas: sistema paralelo o adaptar el sistema de
-ofertas. Concluir con que decidimos adaptar el sistema de ofertas.]
+Se identificaron dos alternativas de diseño válidas, cada una con sus tradeoffs
+de calidad y tiempo de implementación, que se podían utilizar para implementar
+los requisitos nuevos:
+
+\begin{enumerate}
+
+  \item Desarrollar un subsistema paralelo, independiente, de asignación de
+    puntos.
+
+  \item Incorporar nuevas capacidades al sistema existente de ofertas para
+    asignar puntos.
+
+\end{enumerate}
+
+La segunda alternativa se debe a la similitud entre el funcionamiento de los
+nuevos requisitos con respecto a lo ofrecido por el sistema de ofertas
+existente. En ambos casos, dadas ciertas condiciones, se calcula un valor que
+se aplica a la venta en forma de descuento. La diferencia radica en que la
+oferta es inmediata, el valor es descontado en la compra en la que aplica la
+misma, mientras que los puntos acumulados son aplicables a compras posteriores
+de manera no inmediata.
+
+Inicialmente, la primer alternativa parece más rápida y segura de implementar
+que la segunda. La posibilidad de implementar la nueva lógica de negocio en un
+subsistema separado es atractiva, dado que no es necesario verificar que no se
+estén rompiendo casos válidos preexistentes en el sistema de ofertas. Por otro
+lado, se puede argumentar que constituye una solución de calidad inferior, dado
+que se estaría replicando la lógica común a ambas funcionalidades en dos
+subsistemas independientes.
+
+Después de analizar en profundidad el esquema de implementación actual del
+sistema de ofertas, se decidió extender el mismo para incorporar los conceptos
+de acumulación de puntos, lo que corresponde a la segunda alternativa
+presentada.
+
+\subsection{Implementación}
+
+Para implementar la alternativa elegida, se construyó una nueva clase Cliente,
+que representa la cuenta corriente de puntos de un cliente particular. Se
+diseñó además un el correspondiente repositorio, para permitir en un futuro la
+persistencia de estas entidades. Se modificó la Venta para que acepté un
+Cliente, opcional, al momento de iniciarse, de manera de que esta pueda
+registrar los puntos que se acumulan con la compra en la cuenta corriente del
+cliente.
+
+Finalmente, se desarrollaron nuevas implementaciones de condiciones y acciones
+de ofertas para representar ofertas que asignan puntos a la cuenta corriente
+del cliente. Estas ofertas se almacenan y procesan secuencialmente junto con el
+resto de las ofertas de descuentos, pero las acciones asociadas aplican los
+puntos correspondientes a la venta en la cuenta corriente de puntos del cliente
+asociado a la venta.
 
 \subsection{Dificultades en la implementación}
 
@@ -210,10 +268,6 @@ complicado con el diseño actual.
 
 Se resolvió por quitar la lógica que reaplica los descuentos al agregar cada
 producto, y diferir el cálculo al momento en el que se confirma la venta.
-
-\section{Conclusión}
-
-[TODO: Guitarra]
 
 \end{document}
 
